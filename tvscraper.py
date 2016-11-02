@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Name:
+# Name: Mirja
 # Student number:
 '''
 This script scrapes IMDB and outputs a CSV file with highest rated tv series.
