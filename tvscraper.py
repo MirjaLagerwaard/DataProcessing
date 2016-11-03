@@ -26,9 +26,6 @@ def extract_tvseries(dom):
     - Actors/actresses (comma separated if more than one)
     - Runtime (only a number!)
     '''
-    # extract the whole DOM from the URL
-    page = URL(TARGET_URL)
-    dom = DOM(page.download())
     tv_list = []
 
     for movie in dom.by_tag('div.lister-item mode-advanced'):
@@ -40,19 +37,19 @@ def extract_tvseries(dom):
         # get rid of the extra white space at the end of the string
         genre = genre_unstripped.strip()
 
-        stars_list = []
+        stars_list = ""
         stars = movie.by_tag('p')[2]
         # iterates over the <a> tags of every actor/actress
         for element in stars.by_tag('a'):
             # store the content of the <a> tags in the array stars_list
-            stars_list.append(element.content)
+            stars_list += element.content.encode('utf-8')
 
         runtime = movie.by_tag('span.runtime')[0].content
         # split the string 'runtime' to store only the number
         number_runtime = runtime.split()[0]
 
         # store the extracted information in the array tv_list
-        tv_list.append([title, rating, genre, stars_list, number_runtime])
+        tv_list.append([title.encode('utf-8'), rating.encode('utf-8'), genre.encode('utf-8'), stars_list, number_runtime.encode('utf-8')])
 
     return tv_list
 
@@ -63,7 +60,8 @@ def save_csv(f, tvseries):
     writer = csv.writer(f)
     writer.writerow(['Title', 'Rating', 'Genre', 'Actors', 'Runtime'])
 
-    # ADD SOME CODE OF YOURSELF HERE TO WRITE THE TV-SERIES TO DISK
+    for row in tvseries:
+        writer.writerow(row)
 
 if __name__ == '__main__':
     # Download the HTML file
