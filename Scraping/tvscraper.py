@@ -41,7 +41,7 @@ def extract_tvseries(dom):
         stars = movie.by_tag('p')[2]
         # iterates over the <a> tags of every actor/actress
         for element in stars.by_tag('a'):
-            # store the content of the <a> tags in the array stars_list
+            # store the content of the <a> tags in the string stars_list
             stars_list += element.content.encode('utf-8')
 
         runtime = movie.by_tag('span.runtime')[0].content
@@ -49,6 +49,7 @@ def extract_tvseries(dom):
         number_runtime = runtime.split()[0]
 
         # store the extracted information in the array tv_list
+        # because it deletes each utf-8 character you need to specify this 
         tv_list.append([title.encode('utf-8'), rating.encode('utf-8'), genre.encode('utf-8'), stars_list, number_runtime.encode('utf-8')])
 
     return tv_list
