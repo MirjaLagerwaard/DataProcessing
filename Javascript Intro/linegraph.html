@@ -1,3 +1,7 @@
+# Name: Mirja Lagerwaard
+# Student number: 10363149
+# 
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -443,12 +447,12 @@
       ctx.fillText("Average temperature of the year 1994 in the Bild (NL)", 130, 50)
 
       // Title x-axis
-      ctx.font = "16px arial"
+      ctx.font = "14px arial"
       ctx.fillText("Months", 330, 480)
 
       // Title y-axis
-      ctx.font = "16px arial"
-      ctx.fillText("Temperature (* 0,1 degree celcius)", 330, 480)
+      ctx.font = "14px arial"
+      ctx.fillText("Temperature (0.1 degree Celsius)", 50, 480)
 
       // Start drawing the line of the graph
       ctx.beginPath();
@@ -480,11 +484,11 @@
       }
 
       // Draw months on the x-axis
-      ctx.font = "12px arial"
+      ctx.font = "8px arial"
       pixel_x = 85
       ctx.fillText("1994", pixel_x, 435)
       pixel_x += 500 / 12
-      ctx.fillText("February", pixel_x, 445)
+      ctx.fillText("February", pixel_x, 435)
       pixel_x += 500 / 12
       ctx.fillText("March", pixel_x, 435)
       pixel_x += 500 / 12
