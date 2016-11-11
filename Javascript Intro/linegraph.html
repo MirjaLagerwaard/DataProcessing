@@ -1,6 +1,7 @@
+<!-- /
 # Name: Mirja Lagerwaard
 # Student number: 10363149
-# 
+ -->
 
 <!DOCTYPE html>
 <html>
@@ -378,7 +379,7 @@
     </head>
     <body>
       <center>
-        <canvas id='canvas' height='500' width='700' style="border:1px solid #000000;"></canvas>
+        <canvas id='canvas' height='500' width='700'></canvas>
       </center>
       <script>
         // Load the data
@@ -444,15 +445,11 @@
 
       // Graph title
       ctx.font = "20px arial"
-      ctx.fillText("Average temperature of the year 1994 in the Bild (NL)", 130, 50)
+      ctx.fillText("Average temperature in De Bild (NL, 1994)", 170, 50)
 
       // Title x-axis
       ctx.font = "14px arial"
       ctx.fillText("Months", 330, 480)
-
-      // Title y-axis
-      ctx.font = "14px arial"
-      ctx.fillText("Temperature (0.1 degree Celsius)", 50, 480)
 
       // Start drawing the line of the graph
       ctx.beginPath();
@@ -483,36 +480,6 @@
         pix_x += 500 / 12
       }
 
-      // Draw months on the x-axis
-      ctx.font = "8px arial"
-      pixel_x = 85
-      ctx.fillText("1994", pixel_x, 435)
-      pixel_x += 500 / 12
-      ctx.fillText("February", pixel_x, 435)
-      pixel_x += 500 / 12
-      ctx.fillText("March", pixel_x, 435)
-      pixel_x += 500 / 12
-      ctx.fillText("April", pixel_x, 435)
-      pixel_x += 500 / 12
-      ctx.fillText("May", pixel_x, 435)
-      pixel_x += 500 / 12
-      ctx.fillText("June", pixel_x, 435)
-      pixel_x += 500 / 12
-      ctx.fillText("July", pixel_x, 435)
-      pixel_x += 500 / 12
-      ctx.fillText("August", pixel_x, 435)
-      pixel_x += 500 / 12
-      ctx.fillText("September", pixel_x, 435)
-      pixel_x += 500 / 12
-      ctx.fillText("October", pixel_x, 435)
-      pixel_x += 500 / 12
-      ctx.fillText("November", pixel_x, 435)
-      pixel_x += 500 / 12
-      ctx.fillText("December", pixel_x, 435)
-      pixel_x += 500 / 12
-      ctx.fillText("1995", pixel_x, 435)
-      pixel_x += 500 / 12
-
       // Draw y-axis
       ctx.beginPath();
       ctx.moveTo(100, 400);
@@ -525,18 +492,52 @@
       var pix_y = 400
 
       for (var i = 0; i < 17; i++) {
-        ctx.font = "12px arial"
-        ctx.fillText(scale_y, 65, pix_y)
+        ctx.font = "12px arial";
+        ctx.fillText(scale_y, 65, pix_y);
         ctx.beginPath();
         ctx.moveTo(100, pix_y);
         ctx.lineTo(90, pix_y);
         ctx.stroke();
         ctx.closePath();
-        pix_y -= 300 / 16
-        scale_y += 20
+        pix_y -= 300 / 16;
+        scale_y += 20;
       }
 
+      // Draw months on the x-axis
+      ctx.font = "8px arial";
+      pixel_x = 85;
+      ctx.fillText("1994", pixel_x, 435);
+      pixel_x += 500 / 12;
+      ctx.fillText("February", pixel_x, 435);
+      pixel_x += 500 / 12;
+      ctx.fillText("March", pixel_x, 435);
+      pixel_x += 500 / 12;
+      ctx.fillText("April", pixel_x, 435);
+      pixel_x += 500 / 12;
+      ctx.fillText("May", pixel_x, 435);
+      pixel_x += 500 / 12;
+      ctx.fillText("June", pixel_x, 435);
+      pixel_x += 500 / 12;
+      ctx.fillText("July", pixel_x, 435);
+      pixel_x += 500 / 12;
+      ctx.fillText("August", pixel_x, 435);
+      pixel_x += 500 / 12;
+      ctx.fillText("September", pixel_x, 435);
+      pixel_x += 500 / 12;
+      ctx.fillText("October", pixel_x, 435);
+      pixel_x += 500 / 12;
+      ctx.fillText("November", pixel_x, 435);
+      pixel_x += 500 / 12;
+      ctx.fillText("December", pixel_x, 435);
+      pixel_x += 500 / 12;
+      ctx.fillText("1995", pixel_x, 435);
+      pixel_x += 500 / 12;
 
+      // Title y-axis
+      ctx.font = "14px arial";
+      ctx.rotate(270 * Math.PI / 180);
+      ctx.fillText("Temperature (0.1 degree Celsius)", -360, 30);
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
 
       </script>
     </body>
