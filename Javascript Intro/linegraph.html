@@ -2,7 +2,8 @@
 <html>
   <head>
     <div>
-    <textarea id="rawdata">
+      <span style="visibility: hidden">
+        <textarea id="rawdata">
 19940101,31
 19940102,47
 19940103,62
@@ -369,77 +370,170 @@
 19941230,67
 19941231,50
 19950101,20</textarea>
-  </div>
-  </head>
-  <body>
-    <center><canvas id='canvas' height='500' width='700'></canvas></center>
-    <script>
+      </span>
+    </head>
+    <body>
+      <center>
+        <canvas id='canvas' height='500' width='700' style="border:1px solid #000000;"></canvas>
+      </center>
+      <script>
+        // Load the data
+        var data = document.getElementById("rawdata").innerHTML;
 
-      // load the data
-      var data = document.getElementById("rawdata").innerHTML;
+        // Split the content of the data into lines
+        var lines = data.split("\n");
 
-      // split the content of the data into lines
-      var lines = data.split("\n");
+        // Array to store the datapoints
+        var datapoints = [];
 
-      var datapoints = [];
-      // counter for converting dates into daynumbers of the year
-      var day = 0;
+        // Counter for converting dates into daynumbers of the year
+        var day = 0;
 
-      // split the content of the data into two chunks: date and temperature
-      lines.forEach(function(entry){
-        chunks = entry.split(",")
-        day += 1
-        datapoints.push([day, chunks[1]])
-      });
-      console.log(datapoints)
+        // Foreach loop to iterate over each element in 'lines'
+        lines.forEach(function(entry){
+          // Split the content of the data into two chunks: date and temperature
+          chunks = entry.split(",")
+          // Update counter
+          day += 1
+          // Store the datapoints into the array 'datapoints'
+          datapoints.push([day, chunks[1]])
+        });
+        // Check if data is loaded correctly
+        console.log(datapoints)
 
-      // function to transform the data into screen coordinates
-      function createTransform(domain, range){
-        var domain_min = domain[0]
-        var domain_max = domain[1]
-        var range_min = range[0]
-        var range_max = range[1]
+        // Function to transform the data into screen coordinates
+        function createTransform(domain, range){
+          var domain_min = domain[0]
+          var domain_max = domain[1]
+          var range_min = range[0]
+          var range_max = range[1]
 
-        // formulas to calculate the alpha and the beta
-       	var alpha = (range_max - range_min) / (domain_max - domain_min)
-      	var beta = range_max - alpha * domain_max
+          // Formulas to calculate the alpha and the beta
+         	var alpha = (range_max - range_min) / (domain_max - domain_min)
+        	var beta = range_max - alpha * domain_max
 
-        return function(x){
-          return alpha * x + beta;
-        }
-    };
+          // Returns the function for the lineair transformation (y= a * x + b)
+          return function(x){
+            return alpha * x + beta;
+          }
+      };
 
-    var transform_x = createTransform([1, 366], [0, 700]);
-    var transform_y = createTransform([-60, 260], [500, 0]);
-    var transform = [];
+      // Store lineair transformation function for x-axis and y-axis
+      var transform_x = createTransform([1, 366], [100, 600]);
+      var transform_y = createTransform([-60, 260], [400, 100]);
 
-    // transform every datapoint and store in the array transform
-    for (var i = 0; i < datapoints.length; i++) {
-      screen_x = transform_x(datapoints[i][0])
-      screen_y = transform_y(datapoints[i][1])
-      transform.push([screen_x, screen_y])
-    }
-    console.log(transform);
+      // Create array to store the transformed datapoints
+      var transform = [];
 
-    //define properties of the canvas
-    var canvas = document.getElementById("canvas");
-    var ctx = canvas.getContext("2d");
+      // Transform every datapoint and store in the array 'transform'
+      for (var i = 0; i < datapoints.length; i++) {
+        screen_x = transform_x(datapoints[i][0])
+        screen_y = transform_y(datapoints[i][1])
+        transform.push([screen_x, screen_y])
+      }
+      // Check if the datapoints are transformed correctly
+      console.log(transform);
 
-    // First path
-    ctx.beginPath();
-    ctx.strokeStyle = 'red';
-    for (var i = 0; i < transform.length; i++) {
-      ctx.lineTo(transform[i][0],transform[i][1]);
-    }
-    ctx.stroke();
-    ctx.closePath();
+      // Define properties of the canvas
+      var canvas = document.getElementById("canvas");
+      var ctx = canvas.getContext("2d");
+
+      // Graph title
+      ctx.font = "20px arial"
+      ctx.fillText("Average temperature of the year 1994 in the Bild (NL)", 130, 50)
+
+      // Title x-axis
+      ctx.font = "16px arial"
+      ctx.fillText("Months", 330, 480)
+
+      // Title y-axis
+      ctx.font = "16px arial"
+      ctx.fillText("Temperature (* 0,1 degree celcius)", 330, 480)
+
+      // Start drawing the line of the graph
+      ctx.beginPath();
+      ctx.strokeStyle = 'black';
+      // Draw a line between every set of transformed x and y coordinates
+      for (var i = 0; i < transform.length; i++) {
+        ctx.lineTo(transform[i][0],transform[i][1]);
+      }
+      ctx.stroke();
+      ctx.closePath();
+
+      // Draw x-axis
+      ctx.beginPath();
+      ctx.moveTo(100, 410);
+      ctx.lineTo(600, 410);
+      ctx.stroke();
+      ctx.closePath
+
+      // Draw scale lines on x-axis
+      var pix_x = 100
+
+      for (var i = 0; i < 13; i++) {
+        ctx.beginPath();
+        ctx.moveTo(pix_x, 410);
+        ctx.lineTo(pix_x, 420);
+        ctx.stroke();
+        ctx.closePath();
+        pix_x += 500 / 12
+      }
+
+      // Draw months on the x-axis
+      ctx.font = "12px arial"
+      pixel_x = 85
+      ctx.fillText("1994", pixel_x, 435)
+      pixel_x += 500 / 12
+      ctx.fillText("February", pixel_x, 445)
+      pixel_x += 500 / 12
+      ctx.fillText("March", pixel_x, 435)
+      pixel_x += 500 / 12
+      ctx.fillText("April", pixel_x, 435)
+      pixel_x += 500 / 12
+      ctx.fillText("May", pixel_x, 435)
+      pixel_x += 500 / 12
+      ctx.fillText("June", pixel_x, 435)
+      pixel_x += 500 / 12
+      ctx.fillText("July", pixel_x, 435)
+      pixel_x += 500 / 12
+      ctx.fillText("August", pixel_x, 435)
+      pixel_x += 500 / 12
+      ctx.fillText("September", pixel_x, 435)
+      pixel_x += 500 / 12
+      ctx.fillText("October", pixel_x, 435)
+      pixel_x += 500 / 12
+      ctx.fillText("November", pixel_x, 435)
+      pixel_x += 500 / 12
+      ctx.fillText("December", pixel_x, 435)
+      pixel_x += 500 / 12
+      ctx.fillText("1995", pixel_x, 435)
+      pixel_x += 500 / 12
+
+      // Draw y-axis
+      ctx.beginPath();
+      ctx.moveTo(100, 400);
+      ctx.lineTo(100, 100);
+      ctx.stroke();
+      ctx.closePath();
+
+      // Draw scale lines and scale numbers on y-axis
+      var scale_y = -60
+      var pix_y = 400
+
+      for (var i = 0; i < 17; i++) {
+        ctx.font = "12px arial"
+        ctx.fillText(scale_y, 65, pix_y)
+        ctx.beginPath();
+        ctx.moveTo(100, pix_y);
+        ctx.lineTo(90, pix_y);
+        ctx.stroke();
+        ctx.closePath();
+        pix_y -= 300 / 16
+        scale_y += 20
+      }
 
 
 
-
-
-
-
-    </script>
-  </body>
+      </script>
+    </body>
 </html>
