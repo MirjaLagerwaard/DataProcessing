@@ -1,5 +1,8 @@
-<textarea id="rawdata">
-#date,maxtemp
+<!DOCTYPE html>
+<html>
+  <head>
+    <div>
+    <textarea id="rawdata">
 19940101,31
 19940102,47
 19940103,62
@@ -365,5 +368,62 @@
 19941229,109
 19941230,67
 19941231,50
-19950101,20
-</textarea>
+19950101,20</textarea>
+  </div>
+  </head>
+  <body>
+    <canvas id='mycanvas'></canvas>
+    <script>
+
+      // load data
+      var data = document.getElementById("rawdata").innerHTML;
+
+      // split the content of the data into lines
+      var lines = data.split("\n");
+
+      var datapoints = [];
+
+      // split the content of the data  into two chunks: date and temperature
+      lines.forEach(function(entry){
+        chunks = entry.split(",")
+        // convert dates intro Javascript dates
+        date = new Date(chunks[0].substring(0,4) + "-" + chunks[0].substring(4,6) + "-" + chunks[0].substring(6,8))
+        // create an array of the datapoints
+        datapoints.push([date, chunks[1]])
+      });
+
+      // check if data is loaded correctly
+      console.log(datapoints)
+
+      // transformation of the data into screen coordinates
+      function createTransform(domain, range){
+        var domain_min = domain[0]
+        var domain_max = domain[1]
+        var range_min = range[0]
+        var range_max = range[1]
+
+        // formulas to calculate the alpha and the beta
+       	var alpha = (range_max - range_min) / (domain_max - domain_min)
+      	var beta = range_max - alpha * domain_max
+
+        return function(x){
+          return alpha * x + beta;
+        }
+    };
+
+    var transform_y = createTransform([-58, 258], [300, 500]);
+      console.log(transform_y(15));
+
+    // returns the number of milliseconds between midnight of January 1, 1970 and the specified date.
+    var transform_x = createTransform([-58, 258], [300, 500]);
+
+    //define properties of the canvas
+    var canvas = document.getElementById('mycanvas');
+    var ctx = canvas.getContext('2d');
+    void ctx.clearRect(10, 10, 500, 300);
+
+
+
+    </script>
+  </body>
+</html>
