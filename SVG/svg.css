@@ -1,16 +1,23 @@
 /* continent color */
 .continent
 {
-  
+
 }
 
 /* country colors */
-#country1
+#nld
 {
-  
+  stroke: black;
+  fill: orange;
 }
 
-#country2
+#esp
 {
+  stroke: yellow;
+  fill: red;
+}
 
+#fra {
+  stroke: white;
+  fill: blue;
 }
