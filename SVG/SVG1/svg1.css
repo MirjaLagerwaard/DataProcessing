@@ -1,0 +1,29 @@
+/*
+# Name: Mirja Lagerwaard
+# Student number: 10363149
+*/
+
+/* continent color */
+.continent
+{
+
+}
+
+/* country colors */
+/* the Netherlands */
+#nld {
+  stroke: #24435c;
+  fill: #4785b8;
+}
+
+/* Spain */
+#esp {
+  stroke: #24435c;
+  fill: #4785b8;
+}
+
+/* France */
+#fra {
+  stroke: #24435c;
+  fill: #4785b8;
+}
