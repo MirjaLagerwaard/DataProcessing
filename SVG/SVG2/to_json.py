@@ -6,9 +6,9 @@ import csv
 import json
 
 csvfile = open('cat_population.csv', 'r')
-jsonfile = open('file.json', 'w')
+jsonfile = open('cat.json', 'w')
 
-fieldnames = ("Country","Cat Population")
+fieldnames = ("Country","CatPopulation")
 reader = csv.DictReader(csvfile, fieldnames)
 points = []
 
