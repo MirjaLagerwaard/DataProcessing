@@ -6,6 +6,7 @@
 var data = document.getElementById("catsdata").innerHTML;
 var json = JSON.parse(data);
 
+// array for converting country names into country codes
 var country_codes = [
     ["al", "ALB", "Albania"],
     ["at", "AUT", "Austria"],
@@ -21,24 +22,28 @@ var country_codes = [
     ["gr", "GRC", "Greece"],
     ["hu", "HUN", "Hungary"],
     ["is", "ISL", "Iceland"],
+    ["ie", "IRL", "Ireland"],
     ["it", "ITA", "Italy"],
+    ["mk", "MKD", "Macedonia"],
     ["nl", "NLD", "Netherlands"],
     ["no", "NOR", "Norway"],
     ["pl", "POL", "Poland"],
     ["pt", "PRT", "Portugal"],
     ["ro", "ROU", "Romania"],
-    ["rs", "SRB", "Serbia"],
     ["si", "SVN", "Slovenia"],
     ["es", "ESP", "Spain"],
     ["se", "SWE", "Sweden"],
     ["ch", "CHE", "Switzerland"],
     ["ua", "UKR", "Ukraine"],
-    ["gb", "GBR", "United Kingdom"] ];
+    ["gb", "GBR", "United Kingdom"]
+  ];
 
+// color the map when the window is loaded
 window.onload = function() {
 
   land = document.getElementsByTagName("path");
 
+  // make all countries grey and give the countries a black border
   for (var i = 0; i < land.length; i++){
     land[i].setAttribute('fill', '#bfbfbf');
     land[i].setAttribute('stroke', 'black');
@@ -46,16 +51,18 @@ window.onload = function() {
 
   json.points.forEach(function(entry){
 
-    if (entry.CatPopulation <= 1){
+    if (entry.CatPopulation <= 0.5){
       country_codes.forEach(function(element){
+        // convert country name into country code by using the array 'country_codes'
         if (entry.Country == element[2]) {
           var id = String(element[0])
+          // give the country the appropriate color
           document.getElementById(id).setAttribute('fill', '#fc9272');
         }
       });
     }
 
-    else if (entry.CatPopulation > 1 && entry.CatPopulation <= 2){
+    else if (entry.CatPopulation > 0.5 && entry.CatPopulation <= 1){
       country_codes.forEach(function(element){
         if (entry.Country == element[2]) {
           var id = String(element[0])
@@ -64,7 +71,7 @@ window.onload = function() {
       });
     }
 
-    else if (entry.CatPopulation > 2 && entry.CatPopulation <= 4){
+    else if (entry.CatPopulation > 1 && entry.CatPopulation <= 1.5){
       country_codes.forEach(function(element){
         if (entry.Country == element[2]) {
           var id = String(element[0])
@@ -73,7 +80,7 @@ window.onload = function() {
       });
     }
 
-    else if (entry.CatPopulation > 4 && entry.CatPopulation <= 6){
+    else if (entry.CatPopulation > 1.5 && entry.CatPopulation <= 4){
       country_codes.forEach(function(element){
         if (entry.Country == element[2]) {
           var id = String(element[0])
@@ -82,7 +89,7 @@ window.onload = function() {
       });
     }
 
-    else if (entry.CatPopulation > 6 && entry.CatPopulation <= 8){
+    else if (entry.CatPopulation > 4 && entry.CatPopulation <= 8){
       country_codes.forEach(function(element){
         if (entry.Country == element[2]) {
           var id = String(element[0])
@@ -91,7 +98,7 @@ window.onload = function() {
       });
     }
 
-    else if (entry.CatPopulation > 8 && entry.CatPopulation <= 10){
+    else if (entry.CatPopulation > 8){
       country_codes.forEach(function(element){
         if (entry.Country == element[2]) {
           var id = String(element[0])
@@ -101,21 +108,3 @@ window.onload = function() {
     }
   });
 }
-
-
-// else if (entry.Catpopulation <= 2){
-//
-// }
-//
-// else if (entry.Catpopulation <= 5){
-//
-// }
-//
-// else if (entry.Catpopulation > 10){
-//
-// }
-
-// data.forEach(function(entry){
-//   var jsonObject = JSON.parse(entry);
-//   console.log(jsonObject)
-// });
