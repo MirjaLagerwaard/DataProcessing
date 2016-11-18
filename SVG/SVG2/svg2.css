@@ -20,3 +20,8 @@
   font-weight: 500;
   margin: 0 0 24px;
 }
+
+svg {
+  fill: #bfbfbf;
+  stroke: black;
+}

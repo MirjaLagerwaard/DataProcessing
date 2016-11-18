@@ -41,13 +41,6 @@ var country_codes = [
 // color the map when the window is loaded
 window.onload = function() {
 
-  // make all countries grey and give all countries a black border
-  land = document.getElementsByTagName("path");
-  for (var i = 0; i < land.length; i++){
-      land[i].setAttribute('fill', '#bfbfbf');
-      land[i].setAttribute('stroke', 'black');
-  }
-
   var amount_bounds = 6;
   // array for the used colors
   var color = ['#67000d', '#a50f15', '#cb181d', '#ef3b2c', '#fb6a4a', '#fc9272']
@@ -66,7 +59,7 @@ window.onload = function() {
             // get country ID
             var id = String(element[0])
             // give the country the appropriate color
-            document.getElementById(id).setAttribute('fill', color[i])
+            document.getElementById(id).style.fill = color[i]
           }
         })
       }
