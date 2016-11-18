@@ -41,70 +41,35 @@ var country_codes = [
 // color the map when the window is loaded
 window.onload = function() {
 
+  // make all countries grey and give all countries a black border
   land = document.getElementsByTagName("path");
-
-  // make all countries grey and give the countries a black border
   for (var i = 0; i < land.length; i++){
-    land[i].setAttribute('fill', '#bfbfbf');
-    land[i].setAttribute('stroke', 'black');
+      land[i].setAttribute('fill', '#bfbfbf');
+      land[i].setAttribute('stroke', 'black');
   }
 
+  var amount_bounds = 6;
+  // array for the used colors
+  var color = ['#67000d', '#a50f15', '#cb181d', '#ef3b2c', '#fb6a4a', '#fc9272']
+  // array for the used bounds
+  var bounds = [Infinity, 8, 4, 1.5, 1, 0.5]
+
+  // iterte over each datapoint
   json.points.forEach(function(entry){
-
-    if (entry.CatPopulation <= 0.5){
-      country_codes.forEach(function(element){
-        // convert country name into country code by using the array 'country_codes'
-        if (entry.Country == element[2]) {
-          var id = String(element[0])
-          // give the country the appropriate color
-          document.getElementById(id).setAttribute('fill', '#fc9272');
-        }
-      });
-    }
-
-    else if (entry.CatPopulation > 0.5 && entry.CatPopulation <= 1){
-      country_codes.forEach(function(element){
-        if (entry.Country == element[2]) {
-          var id = String(element[0])
-          document.getElementById(id).setAttribute('fill', '#fb6a4a');
-        }
-      });
-    }
-
-    else if (entry.CatPopulation > 1 && entry.CatPopulation <= 1.5){
-      country_codes.forEach(function(element){
-        if (entry.Country == element[2]) {
-          var id = String(element[0])
-          document.getElementById(id).setAttribute('fill', '#ef3b2c');
-        }
-      });
-    }
-
-    else if (entry.CatPopulation > 1.5 && entry.CatPopulation <= 4){
-      country_codes.forEach(function(element){
-        if (entry.Country == element[2]) {
-          var id = String(element[0])
-          document.getElementById(id).setAttribute('fill', '#cb181d');
-        }
-      });
-    }
-
-    else if (entry.CatPopulation > 4 && entry.CatPopulation <= 8){
-      country_codes.forEach(function(element){
-        if (entry.Country == element[2]) {
-          var id = String(element[0])
-          document.getElementById(id).setAttribute('fill', '#a50f15');
-        }
-      });
-    }
-
-    else if (entry.CatPopulation > 8){
-      country_codes.forEach(function(element){
-        if (entry.Country == element[2]) {
-          var id = String(element[0])
-          document.getElementById(id).setAttribute('fill', '#67000d');
-        }
-      });
+    for (var i = 0; i < amount_bounds; i++) {
+      // search for the countries within the bound
+      if (entry.CatPopulation <= bounds[i]){
+        // iterate over each country in 'country_codes'
+        country_codes.forEach(function(element){
+          // convert country name into country code by using the array 'country_codes'
+          if (entry.Country == element[2]) {
+            // get country ID
+            var id = String(element[0])
+            // give the country the appropriate color
+            document.getElementById(id).setAttribute('fill', color[i])
+          }
+        })
+      }
     }
   });
 }
