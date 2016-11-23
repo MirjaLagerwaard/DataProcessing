@@ -1,0 +1,14 @@
+/*
+# Name: Mirja Lagerwaard
+# Student number: 10363149
+*/
+
+.chart rect {
+  fill: #ff7f50;
+}
+
+.chart text {
+  fill: white;
+  font: 10px sans-serif;
+  text-anchor: end;
+}

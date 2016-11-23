@@ -6,11 +6,11 @@ import csv
 import json
 
 # open the needed files
-csvfile = open('hours_rain_1994.csv', 'r')
+csvfile = open('percentage_max_duration_sunshine.csv', 'r')
 jsonfile = open('rain.json', 'w')
 
 # define fieldnames
-fieldnames = ("Date","RainHours")
+fieldnames = ("Date","Percentage")
 reader = csv.DictReader(csvfile, fieldnames)
 
 # make array points
