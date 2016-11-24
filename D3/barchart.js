@@ -16,15 +16,14 @@ var chart = d3.select(".chart")
 
 // load data from the json file into d3
 d3.json("sunshine.json", function(data) {
-
-  console.log(data.points)
+  console.log(data.points) // check if data is loaded correctly
   y.domain([0, d3.max(data.points, function(d) { return d.Percentage; })]);
 
   var barWidth = width / data.points.length;
 
   var bar = chart.selectAll("g")
       .data(data.points)
-    .enter().append("g")
+      .enter().append("g")
       .attr("transform", function(d, i) { return "translate(" + i * barWidth + ",0)"; });
 
   bar.append("rect")
