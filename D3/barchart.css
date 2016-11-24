@@ -3,12 +3,76 @@
 # Student number: 10363149
 */
 
+/* Style for the headtitle of the barchart*/
+#headtitle {
+  font-family: times, Times New Roman, times-roman, georgia, serif;
+  color: #444;
+  margin: 0;
+  padding: 0px 0px 6px 0px;
+  font-size: 30px;
+  letter-spacing: -1.5px;
+  font-weight: bold;
+}
+
+/* Style for the subtitle of the barchart*/
+#subtitle {
+  font-family: times, Times New Roman, times-roman, georgia, serif;
+  color: #444;
+  margin: 0;
+  padding: 0px 0px 6px 0px;
+  font-size: 24px;
+  letter-spacing: -1.5px;
+  font-weight: bold;
+}
+
+/* Style for the bars*/
 .chart rect {
   fill: #ff7f50;
 }
 
+/* Style for the chart text*/
 .chart text {
   fill: black;
-  font: 10px sans-serif;
+  font: 12px sans-serif;
   text-anchor: end;
+}
+
+/* Style for the path and line of the axis*/
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+}
+
+/* Style for the text on the axis*/
+.axis text {
+  font: 13px sans-serif;
+}
+
+/* Style for the d3-tip*/
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: black;
+  color: #fff;
+  border-radius: 2px;
+}
+
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
 }

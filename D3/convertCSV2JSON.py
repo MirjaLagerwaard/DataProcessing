@@ -7,7 +7,7 @@ import json
 
 # open the needed files
 csvfile = open('percentage_max_duration_sunshine.csv', 'r')
-jsonfile = open('rain.json', 'w')
+jsonfile = open('sunshine.json', 'w')
 
 # define fieldnames
 fieldnames = ("Date","Percentage")
