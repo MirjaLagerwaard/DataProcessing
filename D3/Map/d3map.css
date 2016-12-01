@@ -1,9 +1,24 @@
+/*
+# Name: Mirja Lagerwaard
+# Student number: 10363149
+*/
+
 #title {
   font-family: times, Times New Roman, times-roman, georgia, serif;
   color: #444;
   margin: 0;
   padding: 0px 0px 6px 0px;
   font-size: 40px;
+  letter-spacing: -1.5px;
+  font-weight: bold;
+}
+
+text {
+  font-family: times, Times New Roman, times-roman, georgia, serif;
+  color: #444;
+  margin: 0;
+  padding: 0px 0px 6px 0px;
+  font-size: 24px;
   letter-spacing: -1.5px;
   font-weight: bold;
 }

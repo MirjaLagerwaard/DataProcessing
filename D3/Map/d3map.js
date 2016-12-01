@@ -1,3 +1,9 @@
+/*
+# Name: Mirja Lagerwaard
+# Student number: 10363149
+*/
+
+// array to get the country codes to colorfill the countries
 var country_codes = [
     ["al", "ALB", "Albania"],
     ["at", "AUT", "Austria"],
@@ -29,16 +35,19 @@ var country_codes = [
     ["gb", "GBR", "United Kingdom"]
   ];
 
+// global variable for data
 var data_glob;
-d3.json("cat.json", function(data) {
-  var amount_bounds = 6;
 
-  // array for the used bounds
+// load the data as json
+d3.json("cat.json", function(data) {
+
+  var amount_bounds = 6;
   var bounds = [Infinity, 8, 4, 1.5, 1, 0.5];
   var fillkeys = ['> 8', '4 - 8', '1.5 - 4', '1 - 1.5', '0.5 - 1', '0 - 0.5'];
 
-
+  // building the data_glob variable
   str = '{'
+
   data.data.forEach(function(entry){
     country_codes.forEach(function(element){
 
@@ -48,6 +57,7 @@ d3.json("cat.json", function(data) {
         // get country ID
         str += '"' + String(element[1]) + '":{'
 
+        // add fillKey for the country
         color = ''
         for (var i = 0; i < amount_bounds; i++) {
           if (entry.Population <= bounds[i]){
@@ -55,18 +65,25 @@ d3.json("cat.json", function(data) {
           }
         }
 
+        // add fillkey to string
         str += color
 
+        // add data value to string
         str += '"population":' + entry.Population + '},'
       }
     })
   })
+
+  // delete the '}' from end of string
   str = str.substr(0, str.length-1) + '}'
 
+  // parse the string as an json object and store in data_glob
   data_glob = JSON.parse(str)
 
+  // make new datamap
   var map = new Datamap({
       element: document.getElementById('container'),
+      // zoom into Europe
       setProjection: function(element) {
         var projection = d3.geo.equirectangular()
           .center([12.5, 52])
@@ -79,29 +96,34 @@ d3.json("cat.json", function(data) {
         return {path: path, projection: projection};
       },
 
+      // define the colors for the fillkeys
       fills: {
-          '0 - 0.5': '#d4f7f6',
-          '0.5 - 1': '#67e4de',
-          '1 - 1.5': '#1fada6',
-          '1.5 - 4': '#17827d',
-          '4 - 8': '#0f5753',
-          '> 8': '#082b2a',
-          defaultFill: '#808080'
+          '0 - 0.5': '#F3FBE6',
+          '0.5 - 1': '#CFF09E',
+          '1 - 1.5': '#A8DBA8',
+          '1.5 - 4': '#79BD9A ',
+          '4 - 8': '#3B8686',
+          '> 8': '#0B486B',
+          defaultFill: '#999999'
       },
 
+      // add the data to the map
       data: data_glob,
 
+      // add geogrpahy configuration
       geographyConfig: {
-          borderColor: '#999999',
+          borderColor: 'grey',
           highlightFillColor: false,
           highlightBorderColor: '#595959',
           popupOnHover: true,
+          // template for popupOnHover
           popupTemplate: function(geo, data) {
               if (data) {
                 return ['<div class="hoverinfo"><strong>' +
                       geo.properties.name + '</strong><br>' +
                       data.population + ' million domestic cats']
               }
+              // show only name of country when there is no data
               else {
                 return ['<div class="hoverinfo"><strong>' +
                       geo.properties.name +
@@ -111,5 +133,6 @@ d3.json("cat.json", function(data) {
       }
   });
 
+  // make legend
   map.legend();
 });
