@@ -6,8 +6,8 @@ import csv
 import json
 
 # open the needed files
-csvfile = open('temp_nov_2015.csv', 'r')
-jsonfile = open('temp_nov_2015.json', 'w')
+csvfile = open('temp_nov_2016.csv', 'r')
+jsonfile = open('temp_nov_2016.json', 'w')
 
 # define fieldnames
 fieldnames = ("Date","MeanTemperature", "MinTemperature", "MaxTemperature")

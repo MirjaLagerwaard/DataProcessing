@@ -22,3 +22,30 @@ text {
   letter-spacing: -1.5px;
   font-weight: bold;
 }
+
+/* Style for the bars*/
+.chart path {
+  stroke: #9db4c0;
+  stroke-width: 4px;
+  fill: none;
+}
+
+/* Style for the chart text*/
+.chart text {
+  fill: black;
+  font: 12px sans-serif;
+  text-anchor: end;
+}
+
+/* Style for the path and line of the axis*/
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  stroke-width: 1px;
+}
+
+/* Style for the text on the axis*/
+.axis text {
+  font: 13px sans-serif;
+}
