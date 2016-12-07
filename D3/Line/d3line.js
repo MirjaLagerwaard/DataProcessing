@@ -9,8 +9,8 @@ var margin = {top: 20, right: 50, bottom: 45, left: 55},
   height = 500 - margin.top - margin.bottom;
 
 // set scale for x
-var x = d3.scale.ordinal()
-  .rangeRoundBands([0, width], .1);
+var x = d3.scale.linear()
+  .range([0, width]);
 
 // set scale for y
 var y = d3.scale.linear()
@@ -19,11 +19,14 @@ var y = d3.scale.linear()
 // set x-axis
 var xAxis = d3.svg.axis()
   .scale(x)
+  .ticks(30)
+  .tickFormat(d => { if(d == 0) {return ""} else {return d}})
   .orient("bottom");
 
 // set y-axis
 var yAxis = d3.svg.axis()
   .scale(y)
+  .ticks([20])
   .orient("left")
 
 // set the height and with of the chart
@@ -34,10 +37,10 @@ var chart = d3.select(".chart")
   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 // load data from the json file into d3
-d3.json("temp_nov_2016.json", function(data) {
+d3.json("temp_nov_2016.json", data => {
   // set x- and y-domain
-  x.domain(data.points.map(function(d) { return d.Date; }));
-  y.domain([-5, 20]);
+  x.domain([0, d3.max(data.points, d => {return +d.Date})]);
+  y.domain(d3.extent(data.points, function(d) {return +d.MeanTemperature;}));
 
 	var valueline = d3.svg.line()
 			.x(function(d) { return x(d.Date); })
@@ -51,7 +54,7 @@ d3.json("temp_nov_2016.json", function(data) {
   // create the x-axis
   chart.append("g")
     .attr("class", "x axis")
-    .attr("transform", "translate(0," + height + ")")
+    .attr("transform", "translate(0," + y(0) + ")")
     .call(xAxis)
   .append("text")
     .attr("x", width / 2)
@@ -70,6 +73,65 @@ d3.json("temp_nov_2016.json", function(data) {
     .style("text-anchor", "end")
     .text("Temperature (degrees Celcius)");
 
+
+    var crossHair = chart.append("g").attr("class", "crosshair");
+    crossHair.append("line").attr("id", "h_crosshair") // horizontal cross hair
+        .attr("x1", 0)
+        .attr("y1", 0)
+        .attr("x2", 0)
+        .attr("y2", 0)
+        .style("stroke", "gray")
+        .style("stroke-width", "2.5px")
+        .style("stroke-dasharray", "5,5")
+        .style("display", "none");
+
+    crossHair.append("line").attr("id", "v_crosshair") // vertical cross hair
+        .attr("x1", 0)
+        .attr("y1", 0)
+        .attr("x2", 0)
+        .attr("y2", 0)
+        .style("stroke", "gray")
+        .style("stroke-width", "2.5px")
+        .style("stroke-dasharray", "5,5")
+        .style("display", "none");
+
+    crossHair.append("text").attr("id", "crosshair_text") // text label for cross hair
+        .style("font-size", "15px")
+        .style("stroke", "black")
+        .style("stroke-width", "0.5px");
+
+    chart.on("mousemove", function () {
+        var xCoord = d3.mouse(this)[0],
+            yCoord = d3.mouse(this)[1];
+            addCrossHair(xCoord, yCoord, data);
+        })
+        .on("mouseover", function () {d3.selectAll(".crosshair").style("display", "block");})
+        .on("mouseout", function () {d3.selectAll(".crosshair").style("display", "none");});
+
+    function addCrossHair(xCoord, yCoord, data) {
+        // Update horizontal cross hair
+        d3.select("#h_crosshair")
+            .attr("x1", x(0))
+            .attr("y1", yCoord)
+            .attr("x2", x(d3.max(data.points, d => {return +d.Date})))
+            .attr("y2", yCoord)
+            .style("display", "block");
+        // Update vertical cross hair
+        d3.select("#v_crosshair")
+            .attr("x1", xCoord)
+            .attr("y1", y(d3.min(data.points, d => {return +d.MeanTemperature})))
+            .attr("x2", xCoord)
+            .attr("y2", y(d3.max(data.points, d => {return +d.MeanTemperature})))
+            .style("display", "block");
+
+        // Update text label
+        if (x.invert(xCoord) < 1) {
+          xCoord = x(1)
+        }
+        d3.select("#crosshair_text")
+            .attr("transform", "translate(" + (xCoord + 5) + "," + (yCoord - 5) + ")")
+            .text("(" + Math.round(x.invert(xCoord)) + " , " + data.points[Math.round(x.invert(xCoord))-1].MeanTemperature + ")");
+    }
 
 });
 
