@@ -20,7 +20,7 @@ var y = d3.scale.linear()
 var xAxis = d3.svg.axis()
   .scale(x)
   .ticks(30)
-  .tickFormat(d => { if(d == 0) {return ""} else {return d}})
+  .tickFormat(d => { if(d == 0) {return ""} else {return d}}) // ensures that the zero will not be printed double
   .orient("bottom");
 
 // set y-axis
@@ -29,7 +29,7 @@ var yAxis = d3.svg.axis()
   .ticks([20])
   .orient("left")
 
-// set the height and with of the chart
+// set the height and with of the chart with margin
 var chart = d3.select(".chart")
   .attr("width", width + margin.left + margin.right)
   .attr("height", height + margin.top + margin.bottom)
@@ -42,11 +42,13 @@ d3.json("temp_nov_2016.json", data => {
   x.domain([0, d3.max(data.points, d => {return +d.Date})]);
   y.domain(d3.extent(data.points, function(d) {return +d.MeanTemperature;}));
 
+  // set line of graph
 	var valueline = d3.svg.line()
 			.x(function(d) { return x(d.Date); })
 			.y(function(d) { return y(d.MeanTemperature); })
 			.interpolate("linear");
 
+  // draw the line of the graph
 	chart.append("path")
 			.attr("class", "line")
 			.attr("d", valueline(data.points));
@@ -57,9 +59,9 @@ d3.json("temp_nov_2016.json", data => {
     .attr("transform", "translate(0," + y(0) + ")")
     .call(xAxis)
   .append("text")
-    .attr("x", width / 2)
+    .attr("x", width / 1.75)
     .attr("y", 42)
-    .style("text-anchor", "end")
+    //.style("text-anchor", "end")
     .text("Days (November 2016)");
 
   // create the y-axis
@@ -69,37 +71,40 @@ d3.json("temp_nov_2016.json", data => {
   .append("text")
     .attr("transform", "rotate(-90)")
     .attr("y", -42)
-    .attr("x", -height / 2.5)
-    .style("text-anchor", "end")
+    .attr("x", -height / 3.5)
+    //.style("text-anchor", "end")
     .text("Temperature (degrees Celcius)");
 
-
+    // make the cross hair
     var crossHair = chart.append("g").attr("class", "crosshair");
-    crossHair.append("line").attr("id", "h_crosshair") // horizontal cross hair
+
+    // horizontal cross hair
+    crossHair.append("line").attr("id", "h_crosshair")
         .attr("x1", 0)
         .attr("y1", 0)
         .attr("x2", 0)
         .attr("y2", 0)
         .style("stroke", "gray")
-        .style("stroke-width", "2.5px")
-        .style("stroke-dasharray", "5,5")
-        .style("display", "none");
+        .style("stroke-width", "2px")
+        .style("stroke-dasharray", "5,5");
 
-    crossHair.append("line").attr("id", "v_crosshair") // vertical cross hair
+    // vertical cross hair
+    crossHair.append("line").attr("id", "v_crosshair")
         .attr("x1", 0)
         .attr("y1", 0)
         .attr("x2", 0)
         .attr("y2", 0)
         .style("stroke", "gray")
-        .style("stroke-width", "2.5px")
-        .style("stroke-dasharray", "5,5")
-        .style("display", "none");
+        .style("stroke-width", "2px")
+        .style("stroke-dasharray", "5,5");
 
-    crossHair.append("text").attr("id", "crosshair_text") // text label for cross hair
-        .style("font-size", "15px")
+    // text label for cross hair
+    crossHair.append("text").attr("id", "crosshair_text")
+        .style("font", "13px sans-serif")
         .style("stroke", "black")
-        .style("stroke-width", "0.5px");
+        .style("stroke-width", "0.25px");
 
+    // add cross hair on moveover, hide on mouseout
     chart.on("mousemove", function () {
         var xCoord = d3.mouse(this)[0],
             yCoord = d3.mouse(this)[1];
@@ -139,12 +144,3 @@ function type(d) {
   d.MeanTemperature = +d.MeanTemperature;
   return d;
 }
-
-// queue()
-// 	.defer(d3.json, 'temp_nov_2015.json')
-// 	.defer(d3.json, 'temp_nov_2016.json')
-// 	.await(makeLine);
-//
-// function makeLine(error, temp_nov_2015, temp_nov_2016) {
-//
-// }
