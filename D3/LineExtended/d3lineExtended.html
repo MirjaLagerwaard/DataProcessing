@@ -8,18 +8,25 @@
 
    <head>
      <center>
-       <text id="headtitle">Mean Daily Temperature</text>
-       <br><text id="subtitle">De Bilt (NL), November 2016</text></br>
+       <text id="headtitle">Daily Temperature in De Bilt (NL)</text>
      </center>
-     <link rel="stylesheet" type="text/css" href="d3line.css"/>
+     <link rel="stylesheet" type="text/css" href="d3lineExtended.css"/>
    </head>
 
    <body>
      <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
      <script src="http://d3js.org/queue.v1.min.js"></script>
      <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
-     <center><br><br><svg class="chart"></svg></br></br></center>
-     <script src="d3line.js"></script>
+     <center><br><br><svg id="linegraph" class="chart"></svg></br></br></center>
+     <script src="d3lineExtended2015.js"></script>
+     <script src="d3lineExtended2016.js"></script>
+
+     <center>
+        <button id = "year2015" onclick="loadData2015()">2015</button>
+        <button id = "year2016" onclick="loadData2016()">2016</button>
+        <script> window.onload = loadData2015(); </script>
+    </center>
+
      <center><text><br><br><br>
 
        Source: <a href>http://projects.knmi.nl/klimatologie/daggegevens/selectie.cgi</a><br><br><br>

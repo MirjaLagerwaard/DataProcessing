@@ -1,0 +1,80 @@
+/*
+# Name: Mirja Lagerwaard
+# Student number: 10363149
+*/
+
+/* Style for the headtitle of the line graph*/
+#headtitle {
+  font-family: times, Times New Roman, times-roman, georgia, serif;
+  color: #444;
+  margin: 0;
+  padding: 0px 0px 6px 0px;
+  font-size: 40px;
+  letter-spacing: -1.5px;
+  font-weight: bold;
+}
+
+/* Style for the text of the page*/
+text {
+  font-family: times, Times New Roman, times-roman, georgia, serif;
+  color: #444;
+  margin: 0;
+  padding: 0px 0px 6px 0px;
+  font-size: 24px;
+  letter-spacing: -1.5px;
+  font-weight: bold;
+}
+
+/* Style for line*/
+.chart path {
+  stroke: #00b3b3;
+  stroke-width: 4px;
+  fill: none;
+}
+
+/* Style for the chart text*/
+.chart text {
+  fill: black;
+  font: 13px sans-serif;
+  text-anchor: end;
+}
+
+/* Style for the path and line of the axis*/
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  stroke-width: 1px;
+}
+
+/* Style for the text on the axis*/
+.axis text {
+  font: 13px sans-serif;
+}
+
+/* Style for the buttons*/
+#year2015,
+#year2016 {
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  background-color: #595959;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+#year2015:hover,
+#year2016:hover {
+    background-color: #999999;
+    color: white;
+}
+
+#year2015:disabled,
+#year2016:disabled {
+  background-color: #999999;
+  color: white;
+}
