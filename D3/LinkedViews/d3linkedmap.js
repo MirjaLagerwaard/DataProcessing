@@ -259,116 +259,137 @@ var country_codes = [
 // global variable for data
 var data_glob;
 
-// load the data as json
-d3.json("qol.json", function(data) {
+window.onload = disableButton2015()
 
-  var amount_bounds = 12;
-  var bounds = [Infinity, 200, 185, 170, 155, 140, 125, 110, 95];
-  var fillkeys = [
-    '> 200',
-    '185 - 200',
-    '170 - 185',
-    '155 - 170',
-    '140 - 155',
-    '125 - 140',
-    '110 - 125',
-    '95 - 110',
-    '< 95'
-  ];
+var data_json;
 
-  // building the data_glob variable
-  str = '{'
+function disableButton2015() {
+  document.getElementById("year2016").disabled = false;
+  document.getElementById("year2015").disabled = true;
+  data_json = "qol2015.json";
+  load_data();
+};
 
-  data.data.forEach(function(entry){
-    country_codes.forEach(function(element){
+function disableButton2016() {
+  document.getElementById("year2015").disabled = false;
+  document.getElementById("year2016").disabled = true;
+  data_json = "qol2016.json";
+  load_data();
+};
 
-      // convert country name into country code by using the array 'country_codes'
-      if (entry.Country == element[2]) {
+function load_data() {
+  d3.selectAll("div.map > *").remove();
+  // load the data as json
+  d3.json(data_json, function(data) {
+    console.log(data)
+    var amount_bounds = 12;
+    var bounds = [Infinity, 200, 185, 170, 155, 140, 125, 110, 95];
+    var fillkeys = [
+      '> 200',
+      '185 - 200',
+      '170 - 185',
+      '155 - 170',
+      '140 - 155',
+      '125 - 140',
+      '110 - 125',
+      '95 - 110',
+      '< 95'
+    ];
 
-        // get country ID
-        str += '"' + String(element[1]) + '":{'
+    // building the data_glob variable
+    str = '{'
 
-        // add fillKey for the country
-        color = ''
-        for (var i = 0; i < amount_bounds; i++) {
-          if (entry.QualityofLifeIndex <= bounds[i]){
-            color = '"fillKey":"' + fillkeys[i] + '",'
+    data.data.forEach(function(entry){
+      country_codes.forEach(function(element){
+
+        // convert country name into country code by using the array 'country_codes'
+        if (entry.Country == element[2]) {
+
+          // get country ID
+          str += '"' + String(element[1]) + '":{'
+
+          // add fillKey for the country
+          color = ''
+          for (var i = 0; i < amount_bounds; i++) {
+            if (entry.QualityofLifeIndex <= bounds[i]){
+              color = '"fillKey":"' + fillkeys[i] + '",'
+            }
           }
+
+          // add fillkey to string
+          str += color
+
+          // add data value to string
+          str += '"QualityofLifeIndex":' + entry.QualityofLifeIndex + '},'
         }
-
-        // add fillkey to string
-        str += color
-
-        // add data value to string
-        str += '"QualityofLifeIndex":' + entry.QualityofLifeIndex + '},'
-      }
+      })
     })
-  })
 
-  // delete the '}' from end of string
-  str = str.substr(0, str.length-1) + '}'
+    // delete the '}' from end of string
+    str = str.substr(0, str.length-1) + '}'
 
-  // parse the string as an json object and store in data_glob
-  data_glob = JSON.parse(str)
+    // parse the string as an json object and store in data_glob
+    data_glob = JSON.parse(str)
 
-  // make new datamap
-  var map = new Datamap({
-      element: document.getElementById('container'),
-      // zoom into Europe
-      setProjection: function(element) {
-        var projection = d3.geo.equirectangular()
-          .center([12.5, 52])
-          .rotate([4.4, 0])
-          .scale(885)
-          .translate([element.offsetWidth / 2, element.offsetHeight / 2]);
-        var path = d3.geo.path()
-          .projection(projection);
+    // make new datamap
+    var map = new Datamap({
+        element: document.getElementById('container'),
+        // zoom into Europe
+        setProjection: function(element) {
+          var projection = d3.geo.equirectangular()
+            .center([12.5, 52])
+            .rotate([4.4, 0])
+            .scale(645)
+            .translate([element.offsetWidth / 2, element.offsetHeight / 2]);
+          var path = d3.geo.path()
+            .projection(projection);
 
-        return {path: path, projection: projection};
-      },
+          return {path: path, projection: projection};
+        },
 
-      // define the colors for the fillkeys
-      fills: {
-        '> 200': '#084081',
-        '185 - 200': '#0868ac',
-        '170 - 185': '#2b8cbe',
-        '155 - 170': '#4eb3d3',
-        '140 - 155': '#7bccc4',
-        '125 - 140': '#a8ddb5',
-        '110 - 125': '#ccebc5',
-        '95 - 110': '#e0f3db',
-        '< 95': '#f7fcf0',
-        defaultFill: '#bfbfbf'
-      },
+        // define the colors for the fillkeys
+        fills: {
+          '> 200': '#084081',
+          '185 - 200': '#0868ac',
+          '170 - 185': '#2b8cbe',
+          '155 - 170': '#4eb3d3',
+          '140 - 155': '#7bccc4',
+          '125 - 140': '#a8ddb5',
+          '110 - 125': '#ccebc5',
+          '95 - 110': '#e0f3db',
+          '< 95': '#f7fcf0',
+          defaultFill: '#bfbfbf'
+        },
 
-      // add the data to the map
-      data: data_glob,
+        // add the data to the map
+        data: data_glob,
 
-      // add geogrpahy configuration
-      geographyConfig: {
-          borderColor: 'black',
-          borderWidth: '0.5px',
-          highlightFillColor: false,
-          highlightBorderColor: 'black',
-          highlightBorderWidth: '1.5px',
-          popupOnHover: true,
-          // template for popupOnHover
-          popupTemplate: function(geo, data) {
-              if (data) {
-                return ['<div class="hoverinfo"><strong>' +
-                      geo.properties.name + '</strong><br>' +
-                      'Quality of Life Index:  ' + data.QualityofLifeIndex]
-              }
-              // show only name of country when there is no data
-              else {
-                return ['<div class="hoverinfo"><strong>' +
-                      geo.properties.name +
-                      '</strong><br>']
-              }
-          }
-      }
+        // add geogrpahy configuration
+        geographyConfig: {
+            borderColor: 'black',
+            borderWidth: '0.5px',
+            highlightFillColor: false,
+            highlightBorderColor: 'black',
+            highlightBorderWidth: '1.5px',
+            popupOnHover: true,
+            // template for popupOnHover
+            popupTemplate: function(geo, data) {
+                if (data) {
+                  return ['<div class="hoverinfo"><strong>' +
+                        geo.properties.name + '</strong><br>' +
+                        'Quality of Life Index:  ' + data.QualityofLifeIndex]
+                }
+                // show only name of country when there is no data
+                else {
+                  return ['<div class="hoverinfo"><strong>' +
+                        geo.properties.name +
+                        '</strong><br>']
+                }
+            }
+        }
+    });
+
+    // make legend
+    map.legend();
   });
-
-  // make legend
-  map.legend();
-});
+}

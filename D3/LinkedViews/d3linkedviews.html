@@ -5,33 +5,37 @@
 
 <!DOCTYPE html>
 <html>
+  <center>
+    <head>
+      <text id="headtitle">Title</text>
+      <link rel="stylesheet" type="text/css" href="d3linkedviews.css"/>
+    </head>
 
-   <head>
-     <center>
-       <text id="headtitle">Title</text>
-     </center>
-     <link rel="stylesheet" type="text/css" href="d3linkedviews.css"/>
-   </head>
+     <body>
+       <br>
+       <button id = "year2015" onclick="disableButton2015(); loadChartData2015()">2015</button>
+       <button id = "year2016" onclick="disableButton2016(); loadChartData2016()">2016</button>
+       </br>
 
-   <body>
-     <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
-     <script src="http://d3js.org/topojson.v1.min.js"></script>
-     <script src="datamaps.world.min.js"></script>
+       <script src="http://d3js.org/queue.v1.min.js"></script>
+       <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+       <script src="http://d3js.org/topojson.v1.min.js"></script>
+       <script src="datamaps.world.min.js"></script>
 
-     <center><br><br><div id="container" style="position: relative; width: 1000px; height: 600px;"></br></br></div></center>
-     <script src="d3linkedmap.js"></script>
-<br><br><br><br><br>
-     <center><svg class="chart"></svg>
-     <center><br><br><script src="d3linkedbarchart.js"></script>
-     <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+       <div class="map" id="container" style="position: relative; width: 750px; height: 450px;"></div>
 
-     <center><text><br><br><br>
+       <script src="d3linkedmap.js"></script>
 
-       Source: <a href = 'https://www.numbeo.com/quality-of-life/rankings_by_country.jsp?title=2016-mid&region=150'>Europe: Quality of Life Index by Country 2016 Mid Year</a><br><br><br>
+       <br><br><svg class="chart"></svg><br></br>
 
-       Mirja Lagerwaard
+       <script src="d3linkedbarchart.js"></script>
+       <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 
-     </br></br></br></text></center>
+       <text>
+         Source: <a href = 'https://www.numbeo.com/quality-of-life/rankings_by_country.jsp?title=2016-mid&region=150'  target="_blank">Europe: Quality of Life Index by Country 2016 Mid Year</a><br><br><br>
+         Mirja Lagerwaard
 
-   </body>
+       </text>
+     </body>
+  </center>
 </html>

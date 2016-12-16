@@ -76,3 +76,30 @@ text {
   top: 100%;
   left: 0;
 }
+
+/* Style for the buttons*/
+#year2015,
+#year2016 {
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  background-color: #595959;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+#year2015:hover,
+#year2016:hover {
+    background-color: #999999;
+    color: white;
+}
+
+#year2015:disabled,
+#year2016:disabled {
+  background-color: #999999;
+  color: white;
+}

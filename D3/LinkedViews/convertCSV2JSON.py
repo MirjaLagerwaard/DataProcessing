@@ -6,8 +6,8 @@ import csv
 import json
 
 # open the needed files
-csvfile = open('qol.csv', 'r')
-jsonfile = open('qol.json', 'w')
+csvfile = open('qol2015.csv', 'r')
+jsonfile = open('qol2015.json', 'w')
 
 # define fieldnames
 fieldnames = (
