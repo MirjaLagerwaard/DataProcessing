@@ -277,11 +277,24 @@ function disableButton2016() {
   load_data();
 };
 
+function updateBarchartHover() {
+  document.getElementById("chart")
+    .on("mouseover", function(d){
+        d3.select(this)
+          .style("fill", "#7bccc4");
+        tip.show(d)
+     })
+    .on("mouseout", function(){
+      d3.select(this)
+        .style("fill", "#2b8cbe");
+      tip.hide()
+    })
+};
+
 function load_data() {
   d3.selectAll("div.map > *").remove();
   // load the data as json
   d3.json(data_json, function(data) {
-    console.log(data)
     var amount_bounds = 12;
     var bounds = [Infinity, 200, 185, 170, 155, 140, 125, 110, 95];
     var fillkeys = [

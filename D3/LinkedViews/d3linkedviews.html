@@ -7,32 +7,41 @@
 <html>
   <center>
     <head>
-      <text id="headtitle">Title</text>
+      <text id="headtitle">Quality of Life and Health Care Index by Country (Europe)</text>
       <link rel="stylesheet" type="text/css" href="d3linkedviews.css"/>
     </head>
 
      <body>
-       <br>
-       <button id = "year2015" onclick="disableButton2015(); loadChartData2015()">2015</button>
-       <button id = "year2016" onclick="disableButton2016(); loadChartData2016()">2016</button>
-       </br>
+       <br><br>
+       <button id="year2015" onclick="disableButton2015(); loadChartData2015()">2015</button>
+       <button id="year2016" onclick="disableButton2016(); loadChartData2016()">2016</button><br>
+
+       <br><text id="subtitle">Quality of Life Index by Country</text>
 
        <script src="http://d3js.org/queue.v1.min.js"></script>
        <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
        <script src="http://d3js.org/topojson.v1.min.js"></script>
        <script src="datamaps.world.min.js"></script>
 
-       <div class="map" id="container" style="position: relative; width: 750px; height: 450px;"></div>
+       <div class="map" id="container" style="position: relative; width: 750px; height: 450px;"></div><br><br><br>
 
        <script src="d3linkedmap.js"></script>
 
-       <br><br><svg class="chart"></svg><br></br>
+       <text id="subtitle">Health Care Index by Country</text><br>
+       <svg class="chart"></svg><br><br>
 
        <script src="d3linkedbarchart.js"></script>
        <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 
        <text>
          Source: <a href = 'https://www.numbeo.com/quality-of-life/rankings_by_country.jsp?title=2016-mid&region=150'  target="_blank">Europe: Quality of Life Index by Country 2016 Mid Year</a><br><br><br>
+
+         This visualization shows the Quality of Life and Health Care index per <br>
+         country of Europe. With the buttons above the page you can choose if <br>
+         you want to see the data of 2015 or 2016. When you hover with your <br>
+         mouse over the countries on the map, the corresponding data of this <br>
+         country will also lit up in the barchart.<br><br>
+
          Mirja Lagerwaard
 
        </text>
