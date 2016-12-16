@@ -3,7 +3,7 @@
 # Student number: 10363149
 */
 
-/* Style for the headtitle of the line graph*/
+/* Style for the headtitle*/
 #headtitle {
   font-family: times, Times New Roman, times-roman, georgia, serif;
   color: #444;
@@ -14,6 +14,7 @@
   font-weight: bold;
 }
 
+/* Style for the subtitle*/
 #subtitle {
   font-family: times, Times New Roman, times-roman, georgia, serif;
   color: #444;

@@ -187,7 +187,7 @@ var country_codes = [
     ["qa", "QAT", "Qatar"],
     ["re", "REU", "Réunion"],
     ["ro", "ROU", "Romania"],
-    ["ru", "RUS", "Russia"],
+    ["ru", "RUS", "Russian Federation"],
     ["rw", "RWA", "Rwanda"],
     ["bl", "BLM", "Saint Barthélemy"],
     ["sh", "SHN", "Saint Helena, Ascension and Tristan da Cunha"],
@@ -275,20 +275,6 @@ function disableButton2016() {
   document.getElementById("year2016").disabled = true;
   data_json = "qol2016.json";
   load_data();
-};
-
-function updateBarchartHover() {
-  document.getElementById("chart")
-    .on("mouseover", function(d){
-        d3.select(this)
-          .style("fill", "#7bccc4");
-        tip.show(d)
-     })
-    .on("mouseout", function(){
-      d3.select(this)
-        .style("fill", "#2b8cbe");
-      tip.hide()
-    })
 };
 
 function load_data() {
@@ -387,6 +373,8 @@ function load_data() {
             popupOnHover: true,
             // template for popupOnHover
             popupTemplate: function(geo, data) {
+                d3.selectAll(".bar").style("fill", "#2b8cbe");
+                d3.select("#"+geo.properties.name.replace(/\s/g, '')).style("fill", "#7bccc4");
                 if (data) {
                   return ['<div class="hoverinfo"><strong>' +
                         geo.properties.name + '</strong><br>' +

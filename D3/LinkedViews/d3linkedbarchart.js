@@ -96,7 +96,7 @@ function load_data_chart() {
       .attr("y", function(d) { return y(d.HealthCareIndex); })
       .attr("height", function(d) { return height - y(d.HealthCareIndex); })
       .attr("width", x.rangeBand())
-
+      .attr("id", function(d) { return d.Country.replace(/\s/g, ''); })
       // change color of the bars on mouse hover and show the data value by using the d3-tip
       .on("mouseover", function(d){
         d3.select(this)
@@ -109,6 +109,7 @@ function load_data_chart() {
           .style("fill", "#2b8cbe");
         tip.hide()
       });
+
   });
 
   function type(d) {
